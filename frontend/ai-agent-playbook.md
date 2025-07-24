@@ -1,11 +1,10 @@
 # Quick Reference Commands
 
 ```
-/analyze [feature-name]     - Analyze existing feature structure
-/implement [type] [name]    - Create new component/hook/util
-/check-rules [categories]   - Verify rule compliance
-/refactor [file]           - Suggest improvements
-/test [component]          - Generate comprehensive tests
+/plan [task]       - Analyze task and clarify requirements before coding
+/check [files]     - Critical review against project guidelines
+/rethink [problem] - Challenge assumptions using extended thinking
+/break [feature]   - Generate adversarial tests to find weak points
 ```
 
 ## Common Scenarios
