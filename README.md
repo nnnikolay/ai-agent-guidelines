@@ -1,4 +1,3 @@
-
 # Anti-Yes-Machine Workflow for Claude Code
 
 A development workflow that encourages critical thinking and prevents superficial code approval. This workflow transforms Claude from a "yes-machine" that might overlook issues into a critical reviewer that actively seeks improvements.
@@ -14,26 +13,54 @@ Most AI assistants tend to be overly agreeable, often approving code that "looks
 
 ## Installation
 
-1. Copy the `.claude/` directory to your project root:
+1. Clone this repository and run the install script from the repo root:
    ```bash
-   cp -r /path/to/anti-yes-machine/.claude ./
+   git clone https://github.com/yourusername/anti-yes-machine.git
+   cd anti-yes-machine
+   ./install.sh /path/to/your/project
    ```
 
-2. Ensure your project has a `CLAUDE.md` file that references your guidelines:
-   ```markdown
-   # Project Guidelines
-   
-   This project follows strict architectural guidelines:
-   - Core Rules: see `.claude/guidelines/core-rules.md`
-   - Detailed Guidelines: see `.claude/guidelines/detailed-guidelines.md`
-   - Implementation Playbook: see `.claude/guidelines/ai-agent-playbook.md`
+   Or install in current directory:
+   ```bash
+   ./install.sh
    ```
+
+2. If you have an existing `CLAUDE.md`, add these references to it:
+   ```markdown
+   ## Project Guidelines
+   
+   Please load and follow these guidelines:
+   - Core Rules: @.claude/guidelines/core-rules.md
+   - Detailed Guidelines: @.claude/guidelines/detailed-guidelines.md
+   - AI Agent Playbook: @.claude/guidelines/ai-agent-playbook.md
+   ```
+
+   If you don't have a `CLAUDE.md`, create one using the template above.
 
 3. Verify installation:
    ```bash
    claude /help
    ```
-   You should see the custom commands listed.
+   You should see the custom commands listed as "(project)" commands.
+
+## Project Structure
+
+After installation, your project will have:
+
+```
+your-project/
+├── .claude/
+│   ├── commands/          # Anti-yes-machine commands
+│   │   ├── plan.md       # Pre-implementation analysis
+│   │   ├── check.md      # Critical code review
+│   │   ├── rethink.md    # Challenge assumptions
+│   │   └── break.md      # Adversarial testing
+│   └── guidelines/        # Frontend architecture rules
+│       ├── core-rules.md
+│       ├── detailed-guidelines.md
+│       └── ai-agent-playbook.md
+└── CLAUDE.md             # Loads guidelines at session start
+```
 
 ## Available Commands
 
@@ -154,24 +181,15 @@ Claude: Generated breaking test cases:
 3. **Use `/rethink` for big decisions** - It activates extended thinking
 4. **Run `/break` before deploys** - Catch issues before users do
 
-## Integration with Project Guidelines
+## What's Included
 
-This workflow works best with structured guidelines:
+### Frontend Guidelines
+- **Core Rules**: Essential architecture patterns (feature-based structure, TypeScript standards)
+- **Detailed Guidelines**: Comprehensive rules with examples for all aspects of frontend development
+- **AI Agent Playbook**: Templates and patterns for common implementation scenarios
 
-```
-.claude/
-├── commands/          # Anti-yes-machine commands
-│   ├── plan.md
-│   ├── check.md
-│   ├── rethink.md
-│   └── break.md
-└── guidelines/        # Your project rules
-    ├── core-rules.md
-    ├── detailed-guidelines.md
-    └── ai-agent-playbook.md
-```
-
-The commands automatically reference your guidelines, ensuring consistent critical analysis aligned with your project standards.
+### Commands
+Each command references the guidelines automatically, ensuring consistent critical analysis aligned with frontend best practices.
 
 ## Why This Works
 
@@ -186,21 +204,32 @@ The commands automatically reference your guidelines, ensuring consistent critic
 **Commands not showing in `/help`**
 - Ensure `.claude/commands/` exists in your project root
 - Check that `.md` files have proper frontmatter
+- Commands should show with "(project)" suffix
 
-**Claude seems too critical**
-- This is by design! The workflow encourages finding issues
-- If there truly are no problems, Claude will acknowledge that
+**Guidelines not being followed**
+- Verify CLAUDE.md exists and references the guideline files
+- Check that file paths in CLAUDE.md use the `@` prefix
+- Ensure `.claude/guidelines/` contains all three guideline files
 
-**Extended thinking not activating**
-- The `/rethink` command includes triggers for extended thinking
-- It works best with complex, open-ended problems
+**Installation conflicts**
+- The installer will warn about existing `.claude` directory
+- Existing files are preserved unless you confirm overwrite
 
-## Contributing
+## Customization
 
-To modify commands, edit the `.md` files in `.claude/commands/`. Each command supports:
+To adapt for your project:
+
+1. **Modify guidelines** in `.claude/guidelines/` to match your standards
+2. **Edit commands** in `.claude/commands/` to change prompts
+3. **Update CLAUDE.md** to include project-specific context
+
+Each command supports:
 - Custom frontmatter for metadata
 - `$ARGUMENTS` placeholder for dynamic input
 - References to project files with `@filename`
-- Bash command execution with `!command`
 
-Remember: The goal is not to make development harder, but to catch issues early when they're cheap to fix.
+## License
+
+MIT - See LICENSE file
+
+Remember: The goal is not to make development harder, but to catch issues early when they're cheap to fix. This workflow helps Claude be a critical thinking partner, not just an agreeable assistant.
